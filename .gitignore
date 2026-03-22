@@ -1,0 +1,16 @@
+# Dépendances
+node_modules/
+
+# Environnement
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker volumes
+mysql_data/
