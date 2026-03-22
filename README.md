@@ -65,10 +65,10 @@ docker compose up -d
 | Application | http://localhost:8082 |
 | phpMyAdmin | http://localhost:8092 |
 
-### Compte admin par défaut
+### Identifiants
 
-- **Email** : `admin@quai-antique.fr`
-- **Mot de passe** : `Admin123!`
+Les identifiants de la base de données et du compte admin sont définis dans le fichier `.env`.  
+Consultez `.env.example` pour voir les variables nécessaires.
 
 ---
 
