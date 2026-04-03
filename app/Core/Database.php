@@ -2,38 +2,36 @@
 
 namespace App\Core;
 
+use PDO;
+
 class Database
 {
-    private static ?Database $instance = null;
-    private \PDO $pdo;
+    private static $instance = null;
 
-    private function __construct()
-    {
-        $host = $_ENV['DB_HOST'] ?? 'db';
-        $dbname = $_ENV['DB_NAME'] ?? 'quai_antique';
-        $user = $_ENV['DB_USER'] ?? 'quai_user';
-        $password = $_ENV['DB_PASSWORD'] ?? 'quai_password';
-        $port = $_ENV['DB_PORT'] ?? '3306';
-
-        $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
-
-        $this->pdo = new \PDO($dsn, $user, $password, [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
-    }
-
-    public static function getInstance(): self
+    public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+            $host = getenv('DB_HOST') ?: 'db';
+            $dbname = getenv('DB_NAME') ?: 'quai_antique';
+            $username = getenv('DB_USER') ?: 'quai_user';
+            $password = getenv('DB_PASSWORD') ?: 'quai_password';
+            $port = getenv('DB_PORT') ?: '3306';
 
-    public function getConnection(): \PDO
-    {
-        return $this->pdo;
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
+            ];
+
+            self::$instance = new PDO(
+                "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4",
+                $username,
+                $password,
+                $options
+            );
+        }
+
+        return self::$instance;
     }
 }

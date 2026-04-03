@@ -4,35 +4,51 @@ namespace App\Core;
 
 class Router
 {
-    private array $routes = [];
+    private $routes = [];
 
-    public function get(string $path, string $controller, string $method): void
+    public function get($path, $controller, $method)
     {
-        $this->routes['GET'][$path] = ['controller' => $controller, 'method' => $method];
+        $this->routes[] = [
+            'method' => 'GET',
+            'path' => $path,
+            'controller' => $controller,
+            'action' => $method
+        ];
     }
 
-    public function post(string $path, string $controller, string $method): void
+    public function post($path, $controller, $method)
     {
-        $this->routes['POST'][$path] = ['controller' => $controller, 'method' => $method];
+        $this->routes[] = [
+            'method' => 'POST',
+            'path' => $path,
+            'controller' => $controller,
+            'action' => $method
+        ];
     }
 
-    public function resolve(): void
+    public function dispatch()
     {
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
-        $url = $_GET['url'] ?? '';
-        $url = trim($url, '/');
+        $request = new Request();
+        $requestMethod = $request->getMethod();
 
-        if (isset($this->routes[$requestMethod][$url])) {
-            $route = $this->routes[$requestMethod][$url];
-            $controllerClass = $route['controller'];
-            $method = $route['method'];
+        if ($requestMethod === 'HEAD') {
+            $requestMethod = 'GET';
+        }
 
-            $controller = new $controllerClass();
-            $controller->$method();
-            return;
+        $requestUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+        $requestUri = rtrim($requestUri, '/') ?: '/';
+
+        foreach ($this->routes as $route) {
+            if ($route['method'] === $requestMethod && $route['path'] === $requestUri) {
+                $controller = new $route['controller']();
+                $action = $route['action'];
+                $controller->$action($request);
+                return;
+            }
         }
 
         http_response_code(404);
-        echo "Page non trouvée";
+        echo "<h1>404 - Page non trouvée</h1>";
+        echo "<p><a href='/'>Retour à l'accueil</a></p>";
     }
 }

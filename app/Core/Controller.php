@@ -4,28 +4,44 @@ namespace App\Core;
 
 abstract class Controller
 {
-    protected function view(string $viewPath, array $data = []): void
+    protected $db;
+
+    public function __construct()
     {
+        $this->db = Database::getInstance();
+    }
+
+    protected function render($view, $data = [])
+    {
+        header('Content-Type: text/html; charset=UTF-8');
+
         extract($data);
 
-        $viewFile = __DIR__ . '/../Views/' . $viewPath . '.php';
+        $viewPath = __DIR__ . "/../Views/$view.php";
 
-        if (!file_exists($viewFile)) {
-            http_response_code(500);
-            echo "Vue introuvable : $viewPath";
+        if (!file_exists($viewPath)) {
+            echo "Erreur : La vue $view n'existe pas";
             return;
         }
 
         ob_start();
-        require $viewFile;
+        require $viewPath;
         $content = ob_get_clean();
 
         require __DIR__ . '/../Views/layouts/main.php';
     }
 
-    protected function redirect(string $url): void
+    protected function redirect($url)
     {
-        header("Location: /$url");
+        header("Location: $url");
+        exit;
+    }
+
+    protected function json($data, $statusCode = 200)
+    {
+        http_response_code($statusCode);
+        header('Content-Type: application/json');
+        echo json_encode($data);
         exit;
     }
 }
