@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Public;
 
 use App\Core\Controller;
+use App\Core\Request;
 
 class HomeController extends Controller
 {
-    public function index(): void
+    public function index(Request $request)
     {
-        $this->view('pages/home', [
+        $this->render('pages/home', [
             'title' => 'Quai Antique — Restaurant Savoyard',
         ]);
     }

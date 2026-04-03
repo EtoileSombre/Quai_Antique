@@ -1,33 +1,33 @@
 <?php
 
-// Autoloader simple basé sur les namespaces
-spl_autoload_register(function (string $class): void {
-    // App\Core\Database → app/Core/Database.php
-    $prefix = 'App\\';
-    if (!str_starts_with($class, $prefix)) {
-        return;
-    }
+require_once __DIR__ . '/../app/autoload.php';
 
-    $relativeClass = substr($class, strlen($prefix));
-    $file = __DIR__ . '/../app/' . str_replace('\\', '/', $relativeClass) . '.php';
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 
-    if (file_exists($file)) {
-        require $file;
-    }
-});
+date_default_timezone_set('Europe/Paris');
 
-// Charger la configuration
-require __DIR__ . '/../config/database.php';
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => (getenv('APP_ENV') === 'production' || getenv('APP_ENV') === 'prod'),
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
 
-// Charger le routeur et les routes
-use App\Core\Router;
-use App\Controllers\HomeController;
+session_start();
 
-$router = new Router();
+$timeout = 7200;
 
-// --- Routes ---
-$router->get('', HomeController::class, 'index');
-$router->get('accueil', HomeController::class, 'index');
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout)) {
+    session_unset();
+    session_destroy();
+    session_start();
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 
-// Résoudre la requête
-$router->resolve();
+$router = require_once __DIR__ . '/../app/routes.php';
+
+$router->dispatch();
