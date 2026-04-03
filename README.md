@@ -77,18 +77,24 @@ Consultez `.env.example` pour voir les variables nécessaires.
 ```
 quai-antique/
 ├── app/
-│   ├── Controllers/     # Contrôleurs MVC
-│   ├── Core/            # Router, Controller, Database
-│   ├── Helpers/         # Fonctions utilitaires
-│   ├── Models/          # Modèles de données
-│   ├── Repositories/    # Accès base de données
-│   ├── Services/        # Logique métier
-│   └── Views/           # Vues (layouts, pages, partials)
-├── config/              # Configuration (BDD, env)
-├── database/            # Schema SQL
-├── docker/              # Dockerfile, config Apache
-├── public/              # Point d'entrée + assets
-├── src/                 # Source CSS Tailwind
+│   ├── Controllers/          # Contrôleurs MVC
+│   │   ├── Admin/            #   Back-office administrateur
+│   │   ├── Auth/             #   Authentification
+│   │   ├── Public/           #   Pages publiques
+│   │   └── Utilisateur/      #   Espace client
+│   ├── Core/                 # Framework maison (Router, Controller, Database, Session, CSRF...)
+│   ├── Models/               # Modèles de données
+│   ├── Repository/           # Accès base de données
+│   ├── Views/                # Vues (layouts, pages, partials)
+│   ├── sql/                  # Structure BDD
+│   ├── autoload.php          # Autoloader PSR-4
+│   ├── helpers.php           # Fonctions globales (CSRF)
+│   └── routes.php            # Définition des routes
+├── docker/
+│   └── apache/               # Config Apache (vhost)
+├── public/                   # Point d'entrée web + assets
+├── src/                      # Source CSS Tailwind
+├── Dockerfile
 ├── docker-compose.yml
 └── package.json
 ```
