@@ -105,6 +105,48 @@
     </div>
 </section>
 
+<!-- Section — Avis Clients -->
+<?php if (!empty($avis)): ?>
+<section class="bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-20 md:py-28">
+        <div class="text-center mb-12">
+            <p class="font-ui text-or text-xs tracking-[0.25em] uppercase mb-3">Témoignages</p>
+            <h2 class="section-title">Ce que disent nos Clients</h2>
+            <div class="separator"></div>
+            <?php if ($average): ?>
+                <p class="text-gris">
+                    Note moyenne :
+                    <span class="text-or font-semibold"><?= number_format($average, 1) ?>/5</span>
+                    <span class="text-or ml-1">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="bi bi-star<?= $i <= round($average) ? '-fill' : '' ?>"></i>
+                        <?php endfor; ?>
+                    </span>
+                </p>
+            <?php endif; ?>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <?php foreach ($avis as $a): ?>
+                <div class="card p-8">
+                    <div class="flex items-center gap-1 mb-4 text-or">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="bi bi-star<?= $i <= $a['rating'] ? '-fill' : '' ?>"></i>
+                        <?php endfor; ?>
+                    </div>
+                    <p class="text-gris text-sm leading-relaxed mb-4"><?= nl2br(htmlspecialchars($a['comment'])) ?></p>
+                    <p class="font-semibold text-or-dark text-sm"><?= htmlspecialchars($a['user_name']) ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="text-center mt-10">
+            <a href="/avis" class="btn-secondary">Voir tous les avis</a>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- Section — CTA Réservation -->
 <section class="max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
     <p class="font-ui text-or text-xs tracking-[0.25em] uppercase mb-3">Rejoignez-nous</p>

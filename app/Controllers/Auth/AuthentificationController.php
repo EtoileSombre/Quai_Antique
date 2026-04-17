@@ -54,6 +54,7 @@ class AuthentificationController extends Controller
         Session::set('user_id', $user->id);
         Session::set('user_role', $user->role);
         Session::set('user_firstname', $user->firstname);
+        Session::set('user_lastname', $user->lastname);
         Session::set('user_default_guests', $user->default_guests);
         Session::set('user_allergies', $user->allergies);
 

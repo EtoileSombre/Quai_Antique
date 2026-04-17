@@ -9,6 +9,9 @@
         <a href="/admin/reservations" class="font-ui text-gris hover:text-or transition whitespace-nowrap <?= str_starts_with($currentUri, '/admin/reservations') ? 'text-or font-semibold' : '' ?>">
             <i class="bi bi-calendar-check"></i> Réservations
         </a>
+        <a href="/admin/avis" class="font-ui text-gris hover:text-or transition whitespace-nowrap <?= str_starts_with($currentUri, '/admin/avis') ? 'text-or font-semibold' : '' ?>">
+            <i class="bi bi-chat-quote"></i> Avis
+        </a>
         <a href="/admin/parametres" class="font-ui text-gris hover:text-or transition whitespace-nowrap <?= str_starts_with($currentUri, '/admin/parametres') ? 'text-or font-semibold' : '' ?>">
             <i class="bi bi-gear"></i> Paramètres
         </a>

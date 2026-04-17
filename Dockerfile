@@ -6,6 +6,12 @@ RUN a2enmod rewrite
 # Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pdo pdo_mysql
 
+# Installer l'extension MongoDB
+RUN apt-get update && apt-get install -y libssl-dev pkg-config \
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Copier la config Apache
 COPY infra/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
 

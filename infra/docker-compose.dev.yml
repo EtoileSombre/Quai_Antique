@@ -11,6 +11,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      mongo:
+        condition: service_started
 
   db:
     image: mysql:8.3
@@ -48,5 +50,15 @@ services:
       db:
         condition: service_healthy
 
+  mongo:
+    image: mongo:7
+    container_name: quai_antique_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - quai_antique_mongo_data:/data/db
+
 volumes:
   quai_antique_data:
+  quai_antique_mongo_data:

@@ -15,6 +15,10 @@ $router->get('/carte', 'App\Controllers\Public\CarteController', 'index');
 // Galerie (publique)
 $router->get('/galerie', 'App\Controllers\Public\GalerieController', 'index');
 
+// Avis (publique + soumission client)
+$router->get('/avis', 'App\Controllers\Public\AvisController', 'index');
+$router->post('/avis', 'App\Controllers\Public\AvisController', 'store');
+
 // RÉSERVATION
 $router->get('/reservation', 'App\Controllers\Public\ReservationController', 'index');
 $router->post('/reservation', 'App\Controllers\Public\ReservationController', 'store');
@@ -77,5 +81,11 @@ $router->get('/admin/reservations', 'App\Controllers\Admin\AdminReservationsCont
 $router->get('/admin/reservations/modifier', 'App\Controllers\Admin\AdminReservationsController', 'editForm');
 $router->post('/admin/reservations/modifier', 'App\Controllers\Admin\AdminReservationsController', 'update');
 $router->post('/admin/reservations/supprimer', 'App\Controllers\Admin\AdminReservationsController', 'delete');
+
+// Admin — Avis (modération MongoDB)
+$router->get('/admin/avis', 'App\Controllers\Admin\AdminAvisController', 'index');
+$router->post('/admin/avis/approuver', 'App\Controllers\Admin\AdminAvisController', 'approve');
+$router->post('/admin/avis/rejeter', 'App\Controllers\Admin\AdminAvisController', 'reject');
+$router->post('/admin/avis/supprimer', 'App\Controllers\Admin\AdminAvisController', 'delete');
 
 return $router;
