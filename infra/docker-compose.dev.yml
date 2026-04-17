@@ -16,6 +16,7 @@ services:
     image: mysql:8.3
     container_name: quai_antique_db
     restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_DATABASE: quai_antique
       MYSQL_ROOT_PASSWORD: root
@@ -26,6 +27,7 @@ services:
     volumes:
       - quai_antique_data:/var/lib/mysql
       - ../app/sql/structure.sql:/docker-entrypoint-initdb.d/structure.sql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/custom.cnf
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s

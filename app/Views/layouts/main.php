@@ -30,7 +30,16 @@
                 <li role="none"><a href="/carte" class="nav-link" role="menuitem">La Carte</a></li>
                 <li role="none"><a href="/galerie" class="nav-link" role="menuitem">Galerie</a></li>
                 <li role="none"><a href="/reservation" class="nav-link" role="menuitem"><i class="bi bi-calendar-event me-1"></i> Réservation</a></li>
-                <li role="none"><a href="/connexion" class="nav-link" role="menuitem"><i class="bi bi-person"></i></a></li>
+                <?php if (\App\Core\Session::has('user_id')): ?>
+                    <?php if (\App\Core\Session::get('user_role') === 'admin'): ?>
+                        <li role="none"><a href="/admin" class="nav-link" role="menuitem"><i class="bi bi-gear"></i> Admin</a></li>
+                    <?php else: ?>
+                        <li role="none"><a href="/profil" class="nav-link" role="menuitem"><i class="bi bi-person"></i> <?= htmlspecialchars(\App\Core\Session::get('user_firstname')) ?></a></li>
+                    <?php endif; ?>
+                    <li role="none"><a href="/deconnexion" class="nav-link" role="menuitem"><i class="bi bi-box-arrow-right"></i></a></li>
+                <?php else: ?>
+                    <li role="none"><a href="/connexion" class="nav-link" role="menuitem"><i class="bi bi-person"></i></a></li>
+                <?php endif; ?>
             </ul>
 
             <!-- Menu hamburger mobile -->
@@ -46,7 +55,16 @@
                 <li><a href="/carte" class="nav-link text-base">La Carte</a></li>
                 <li><a href="/galerie" class="nav-link text-base">Galerie</a></li>
                 <li><a href="/reservation" class="nav-link text-base"><i class="bi bi-calendar-event"></i> Réservation</a></li>
-                <li><a href="/connexion" class="nav-link text-base"><i class="bi bi-person"></i> Connexion</a></li>
+                <?php if (\App\Core\Session::has('user_id')): ?>
+                    <?php if (\App\Core\Session::get('user_role') === 'admin'): ?>
+                        <li><a href="/admin" class="nav-link text-base"><i class="bi bi-gear"></i> Administration</a></li>
+                    <?php else: ?>
+                        <li><a href="/profil" class="nav-link text-base"><i class="bi bi-person"></i> Mon profil</a></li>
+                    <?php endif; ?>
+                    <li><a href="/deconnexion" class="nav-link text-base"><i class="bi bi-box-arrow-right"></i> Déconnexion</a></li>
+                <?php else: ?>
+                    <li><a href="/connexion" class="nav-link text-base"><i class="bi bi-person"></i> Connexion</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </header>
