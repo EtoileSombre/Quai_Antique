@@ -25,6 +25,11 @@ class Request
         return $_POST[$key] ?? $default;
     }
 
+    public function file($key)
+    {
+        return $_FILES[$key] ?? null;
+    }
+
     public function isPost()
     {
         return $this->getMethod() === 'POST';

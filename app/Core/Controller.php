@@ -15,6 +15,7 @@ abstract class Controller
     {
         header('Content-Type: text/html; charset=UTF-8');
 
+        $data['currentUri'] = (new Request())->getUri();
         extract($data);
 
         $viewPath = __DIR__ . "/../Views/$view.php";

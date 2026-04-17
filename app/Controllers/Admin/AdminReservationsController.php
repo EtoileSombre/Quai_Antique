@@ -28,7 +28,7 @@ class AdminReservationsController extends Controller
             return;
         }
 
-        $date = $_GET['date'] ?? date('Y-m-d');
+        $date = $request->get('date', date('Y-m-d'));
         $reservations = $this->reservationRepo->findByDate($date);
 
         $this->render('pages/admin/reservations', [
@@ -45,7 +45,7 @@ class AdminReservationsController extends Controller
             return;
         }
 
-        $id = (int) ($_GET['id'] ?? 0);
+        $id = (int) $request->get('id', 0);
         $reservation = $this->reservationRepo->findById($id);
 
         if (!$reservation) {
@@ -75,11 +75,11 @@ class AdminReservationsController extends Controller
             return;
         }
 
-        $id = (int) ($_POST['id'] ?? 0);
-        $date = trim($_POST['date'] ?? '');
-        $time = trim($_POST['time'] ?? '');
-        $guests = (int) ($_POST['guests'] ?? 0);
-        $allergies = trim($_POST['allergies'] ?? '');
+        $id = (int) $request->post('id', 0);
+        $date = trim($request->post('date', ''));
+        $time = trim($request->post('time', ''));
+        $guests = (int) $request->post('guests', 0);
+        $allergies = trim($request->post('allergies', ''));
 
         if (!$id || !$date || !$time || $guests < 1) {
             Session::set('flash_error', 'Données invalides.');
@@ -105,7 +105,7 @@ class AdminReservationsController extends Controller
             return;
         }
 
-        $id = (int) ($_POST['id'] ?? 0);
+        $id = (int) $request->post('id', 0);
         $reservation = $this->reservationRepo->findById($id);
 
         if ($reservation) {

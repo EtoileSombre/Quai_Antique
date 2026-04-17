@@ -56,13 +56,14 @@ class AdminGalerieController extends Controller
         }
 
         // Upload de l'image
-        if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+        $uploadedFile = $request->file('image');
+        if (!$uploadedFile || $uploadedFile['error'] !== UPLOAD_ERR_OK) {
             Session::set('flash_error', 'Veuillez sélectionner une image.');
             $this->redirect('/admin/galerie');
             return;
         }
 
-        $imagePath = $this->handleUpload($_FILES['image']);
+        $imagePath = $this->handleUpload($uploadedFile);
 
         if (!$imagePath) {
             Session::set('flash_error', 'Format d\'image non supporté. Utilisez JPG, PNG, WebP ou GIF.');
@@ -82,7 +83,7 @@ class AdminGalerieController extends Controller
             return;
         }
 
-        $id = (int) ($_GET['id'] ?? 0);
+        $id = (int) $request->get('id', 0);
         $image = $this->galerieRepo->findById($id);
 
         if (!$image) {
@@ -109,9 +110,9 @@ class AdminGalerieController extends Controller
             return;
         }
 
-        $id = (int) ($_POST['id'] ?? 0);
-        $title = trim($_POST['title'] ?? '');
-        $sortOrder = (int) ($_POST['sort_order'] ?? 0);
+        $id = (int) $request->post('id', 0);
+        $title = trim($request->post('title', ''));
+        $sortOrder = (int) $request->post('sort_order', 0);
 
         if (!$id || empty($title)) {
             Session::set('flash_error', 'Données invalides.');
@@ -122,9 +123,10 @@ class AdminGalerieController extends Controller
         $this->galerieRepo->update($id, $title, $sortOrder);
 
         // Nouvelle image uploadée ?
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $uploadedFile = $request->file('image');
+        if ($uploadedFile && $uploadedFile['error'] === UPLOAD_ERR_OK) {
             $oldImage = $this->galerieRepo->findById($id);
-            $imagePath = $this->handleUpload($_FILES['image']);
+            $imagePath = $this->handleUpload($uploadedFile);
 
             if ($imagePath) {
                 // Supprimer l'ancienne image
@@ -152,7 +154,7 @@ class AdminGalerieController extends Controller
             return;
         }
 
-        $id = (int) ($_POST['id'] ?? 0);
+        $id = (int) $request->post('id', 0);
         $image = $this->galerieRepo->findById($id);
 
         if ($image) {
