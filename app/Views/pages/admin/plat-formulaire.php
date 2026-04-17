@@ -1,63 +1,76 @@
-<?php require __DIR__ . '/../../partials/admin-nav.php'; ?>
+<?php
+$flash_error = \App\Core\Session::get('flash_error') ?: \App\Core\Session::get('error');
+\App\Core\Session::delete('flash_error');
+\App\Core\Session::delete('error');
+?>
 
-<div class="max-w-lg mx-auto px-6 pb-16">
+<!-- En-tête -->
+<section class="bg-nacre">
+    <div class="max-w-5xl mx-auto px-6 pt-20 pb-6 md:pt-28">
+        <h1 class="font-heading text-2xl md:text-3xl font-semibold text-or-dark">
+            <i class="bi bi-pencil text-or"></i> <?= $dish ? 'Modifier le plat' : 'Ajouter un plat' ?>
+        </h1>
+    </div>
+</section>
+
+<?php include __DIR__ . '/../../partials/admin-nav.php'; ?>
+
+<section class="max-w-2xl mx-auto px-6 pb-20">
+
+    <?php if ($flash_error): ?>
+        <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm">
+            <i class="bi bi-exclamation-triangle me-1"></i> <?= htmlspecialchars($flash_error) ?>
+        </div>
+    <?php endif; ?>
+
     <a href="/admin/carte" class="text-or hover:text-or-dark text-sm mb-4 inline-block">
         <i class="bi bi-arrow-left"></i> Retour à la carte
     </a>
 
-    <h1 class="font-heading text-2xl font-semibold text-or-dark mb-6">
-        <?= $dish ? 'Modifier le plat' : 'Ajouter un plat' ?>
-    </h1>
+    <div class="card p-6">
+        <form action="<?= $dish ? '/admin/carte/plats/modifier' : '/admin/carte/plats/ajouter' ?>" method="POST" class="space-y-4">
+            <?= \App\Core\Csrf::field() ?>
+            <?php if ($dish): ?>
+                <input type="hidden" name="id" value="<?= $dish->id ?>">
+            <?php endif; ?>
 
-    <?php if (\App\Core\Session::has('error')): ?>
-        <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded mb-6">
-            <?= htmlspecialchars(\App\Core\Session::get('error')) ?>
-        </div>
-        <?php \App\Core\Session::delete('error'); ?>
-    <?php endif; ?>
+            <div>
+                <label for="title" class="form-label">Titre</label>
+                <input type="text" name="title" id="title" required
+                    value="<?= htmlspecialchars($dish->title ?? '') ?>"
+                    class="form-input">
+            </div>
 
-    <form action="<?= $dish ? '/admin/carte/plats/modifier' : '/admin/carte/plats/ajouter' ?>" method="POST" class="card p-6 space-y-4">
-        <?= \App\Core\Csrf::field() ?>
-        <?php if ($dish): ?>
-            <input type="hidden" name="id" value="<?= $dish->id ?>">
-        <?php endif; ?>
+            <div>
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" id="description" rows="3"
+                    class="form-input"><?= htmlspecialchars($dish->description ?? '') ?></textarea>
+            </div>
 
-        <div>
-            <label for="title" class="block text-sm font-medium mb-1">Titre</label>
-            <input type="text" name="title" id="title" required
-                value="<?= htmlspecialchars($dish->title ?? '') ?>"
-                class="w-full px-3 py-2 border border-gray-200 rounded focus:border-or focus:outline-none">
-        </div>
+            <div>
+                <label for="price" class="form-label">Prix (€)</label>
+                <input type="number" name="price" id="price" step="0.01" min="0" required
+                    value="<?= $dish ? number_format($dish->price, 2, '.', '') : '' ?>"
+                    class="form-input">
+            </div>
 
-        <div>
-            <label for="description" class="block text-sm font-medium mb-1">Description</label>
-            <textarea name="description" id="description" rows="3"
-                class="w-full px-3 py-2 border border-gray-200 rounded focus:border-or focus:outline-none"><?= htmlspecialchars($dish->description ?? '') ?></textarea>
-        </div>
+            <div>
+                <label for="category_id" class="form-label">Catégorie</label>
+                <select name="category_id" id="category_id" required
+                    class="form-input">
+                    <option value="">— Choisir —</option>
+                    <?php foreach ($categories as $cat): ?>
+                        <option value="<?= $cat->id ?>"
+                            <?= ($dish && $dish->category_id === $cat->id) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($cat->name) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-        <div>
-            <label for="price" class="block text-sm font-medium mb-1">Prix (€)</label>
-            <input type="number" name="price" id="price" step="0.01" min="0" required
-                value="<?= $dish ? number_format($dish->price, 2, '.', '') : '' ?>"
-                class="w-full px-3 py-2 border border-gray-200 rounded focus:border-or focus:outline-none">
-        </div>
-
-        <div>
-            <label for="category_id" class="block text-sm font-medium mb-1">Catégorie</label>
-            <select name="category_id" id="category_id" required
-                class="w-full px-3 py-2 border border-gray-200 rounded focus:border-or focus:outline-none bg-white">
-                <option value="">— Choisir —</option>
-                <?php foreach ($categories as $cat): ?>
-                    <option value="<?= $cat->id ?>"
-                        <?= ($dish && $dish->category_id === $cat->id) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($cat->name) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <button type="submit" class="btn-primary w-full">
-            <i class="bi bi-check-lg"></i> <?= $dish ? 'Enregistrer' : 'Ajouter' ?>
-        </button>
-    </form>
-</div>
+            <button type="submit" class="btn-primary w-full">
+                <i class="bi bi-check-lg"></i> <?= $dish ? 'Enregistrer' : 'Ajouter' ?>
+            </button>
+        </form>
+    </div>
+</section>

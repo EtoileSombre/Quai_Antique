@@ -5,18 +5,25 @@ $success = \App\Core\Session::get('success');
 \App\Core\Session::delete('success');
 ?>
 
-<section class="max-w-md mx-auto px-6 py-24">
-    <h1 class="section-title text-center mb-8">Connexion</h1>
+<section class="bg-nacre">
+    <div class="max-w-3xl mx-auto px-6 pt-20 pb-12 md:pt-28 md:pb-16 text-center">
+        <p class="font-ui text-or text-xs md:text-sm tracking-[0.3em] uppercase mb-6">Espace membre</p>
+        <h1 class="font-heading text-3xl md:text-5xl font-semibold mb-4 leading-tight text-or-dark">Connexion</h1>
+        <div class="separator"></div>
+    </div>
+</section>
+
+<section class="max-w-md mx-auto px-6 pb-20">
 
     <?php if ($error): ?>
-        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6 text-sm">
-            <?= $error ?>
+        <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm">
+            <i class="bi bi-exclamation-triangle me-1"></i> <?= $error ?>
         </div>
     <?php endif; ?>
 
     <?php if ($success): ?>
-        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6 text-sm">
-            <?= htmlspecialchars($success) ?>
+        <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">
+            <i class="bi bi-check-circle me-1"></i> <?= htmlspecialchars($success) ?>
         </div>
     <?php endif; ?>
 
@@ -24,18 +31,18 @@ $success = \App\Core\Session::get('success');
         <?= csrf_field() ?>
 
         <div>
-            <label for="email" class="block text-sm font-ui font-medium text-gray-700 mb-1">Adresse email</label>
+            <label for="email" class="form-label">Adresse email</label>
             <input type="email" id="email" name="email" required autocomplete="email"
-                   class="w-full px-4 py-2.5 border border-gris-light rounded focus:outline-none focus:border-or transition text-sm">
+                   class="form-input">
         </div>
 
         <div>
-            <label for="password" class="block text-sm font-ui font-medium text-gray-700 mb-1">Mot de passe</label>
+            <label for="password" class="form-label">Mot de passe</label>
             <input type="password" id="password" name="password" required autocomplete="current-password"
-                   class="w-full px-4 py-2.5 border border-gris-light rounded focus:outline-none focus:border-or transition text-sm">
+                   class="form-input">
         </div>
 
-        <button type="submit" class="btn-primary w-full py-3">
+        <button type="submit" class="btn-primary w-full">
             Se connecter
         </button>
     </form>

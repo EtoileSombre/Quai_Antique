@@ -1,27 +1,40 @@
-<?php require __DIR__ . '/../../partials/admin-nav.php'; ?>
+<?php
+$flash_success = \App\Core\Session::get('flash_success') ?: \App\Core\Session::get('success');
+$flash_error = \App\Core\Session::get('flash_error') ?: \App\Core\Session::get('error');
+\App\Core\Session::delete('flash_success');
+\App\Core\Session::delete('flash_error');
+\App\Core\Session::delete('success');
+\App\Core\Session::delete('error');
+?>
 
-<div class="max-w-6xl mx-auto px-6 pb-16">
-    <h1 class="font-heading text-2xl font-semibold text-or-dark mb-8">Gestion de la Carte</h1>
+<!-- En-tête admin -->
+<section class="bg-nacre">
+    <div class="max-w-5xl mx-auto px-6 pt-20 pb-6 md:pt-28">
+        <h1 class="font-heading text-2xl md:text-3xl font-semibold text-or-dark">
+            <i class="bi bi-card-list text-or"></i> Gestion de la Carte
+        </h1>
+    </div>
+</section>
 
-    <!-- Messages flash -->
-    <?php if (\App\Core\Session::has('success')): ?>
-        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded mb-6">
-            <?= htmlspecialchars(\App\Core\Session::get('success')) ?>
+<?php include __DIR__ . '/../../partials/admin-nav.php'; ?>
+
+<section class="max-w-5xl mx-auto px-6 pb-20">
+
+    <?php if ($flash_success): ?>
+        <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg text-sm">
+            <i class="bi bi-check-circle me-1"></i> <?= htmlspecialchars($flash_success) ?>
         </div>
-        <?php \App\Core\Session::delete('success'); ?>
     <?php endif; ?>
-
-    <?php if (\App\Core\Session::has('error')): ?>
-        <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded mb-6">
-            <?= htmlspecialchars(\App\Core\Session::get('error')) ?>
+    <?php if ($flash_error): ?>
+        <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm">
+            <i class="bi bi-exclamation-triangle me-1"></i> <?= htmlspecialchars($flash_error) ?>
         </div>
-        <?php \App\Core\Session::delete('error'); ?>
     <?php endif; ?>
 
     <div class="grid lg:grid-cols-3 gap-8">
 
         <!-- ═══ CATÉGORIES ═══ -->
-        <div class="lg:col-span-1">
+        <div>
             <div class="card p-6">
                 <h2 class="font-heading text-lg font-semibold mb-4">Catégories</h2>
 
@@ -30,9 +43,9 @@
                     <?= \App\Core\Csrf::field() ?>
                     <div class="space-y-3">
                         <input type="text" name="name" placeholder="Nom de la catégorie" required
-                            class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:border-or focus:outline-none">
+                            class="form-input text-sm">
                         <input type="number" name="sort_order" placeholder="Ordre (0, 1, 2...)" value="0"
-                            class="w-full px-3 py-2 border border-gray-200 rounded text-sm focus:border-or focus:outline-none">
+                            class="form-input text-sm">
                         <button type="submit" class="btn-primary text-sm w-full">
                             <i class="bi bi-plus-lg"></i> Ajouter
                         </button>
@@ -86,26 +99,26 @@
                 <?php else: ?>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-gray-200 text-left">
-                                    <th class="pb-2 font-ui text-gris">Plat</th>
-                                    <th class="pb-2 font-ui text-gris">Catégorie</th>
-                                    <th class="pb-2 font-ui text-gris text-right">Prix</th>
-                                    <th class="pb-2 font-ui text-gris text-right">Actions</th>
+                            <thead class="bg-or/5 border-b border-or/20">
+                                <tr>
+                                    <th class="px-4 py-3 text-left font-ui text-xs uppercase tracking-wider text-gris">Plat</th>
+                                    <th class="px-4 py-3 text-left font-ui text-xs uppercase tracking-wider text-gris">Catégorie</th>
+                                    <th class="px-4 py-3 text-right font-ui text-xs uppercase tracking-wider text-gris">Prix</th>
+                                    <th class="px-4 py-3 text-right font-ui text-xs uppercase tracking-wider text-gris">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($dishes as $dish): ?>
-                                    <tr class="border-b border-gray-100">
-                                        <td class="py-3">
+                                    <tr class="hover:bg-or/5 transition border-b border-gray-100">
+                                        <td class="px-4 py-3">
                                             <div class="font-medium"><?= htmlspecialchars($dish->title) ?></div>
                                             <?php if ($dish->description): ?>
                                                 <div class="text-gris text-xs mt-0.5"><?= htmlspecialchars(mb_strimwidth($dish->description, 0, 60, '...')) ?></div>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="py-3 text-gris"><?= htmlspecialchars($dish->category_name ?? '') ?></td>
-                                        <td class="py-3 text-right font-medium"><?= number_format($dish->price, 2, ',', ' ') ?> €</td>
-                                        <td class="py-3 text-right">
+                                        <td class="px-4 py-3 text-gris"><?= htmlspecialchars($dish->category_name ?? '') ?></td>
+                                        <td class="px-4 py-3 text-right font-medium text-or"><?= number_format($dish->price, 2, ',', ' ') ?> €</td>
+                                        <td class="px-4 py-3 text-right">
                                             <div class="flex gap-2 justify-end">
                                                 <a href="/admin/carte/plats/modifier?id=<?= $dish->id ?>"
                                                    class="text-or hover:text-or-dark" title="Modifier">
@@ -174,5 +187,5 @@
             </div>
         </div>
 
-    </div>
-</div>
+        </div>
+</section>

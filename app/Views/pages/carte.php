@@ -1,16 +1,16 @@
 <!-- Hero carte -->
 <section class="bg-nacre">
-    <div class="max-w-3xl mx-auto px-6 pt-20 pb-8 md:pt-28 md:pb-12 text-center">
-        <p class="font-ui text-or text-xs tracking-[0.3em] uppercase mb-4">Restaurant gastronomique</p>
-        <h1 class="font-heading text-3xl md:text-5xl font-semibold mb-4 text-or-dark">La Carte</h1>
+    <div class="max-w-3xl mx-auto px-6 pt-20 pb-12 md:pt-28 md:pb-16 text-center">
+        <p class="font-ui text-or text-xs md:text-sm tracking-[0.3em] uppercase mb-6">Restaurant gastronomique</p>
+        <h1 class="font-heading text-3xl md:text-5xl font-semibold mb-4 leading-tight text-or-dark">La Carte</h1>
         <div class="separator"></div>
-        <p class="text-gris max-w-xl mx-auto">
+        <p class="text-base md:text-lg text-gris max-w-xl mx-auto leading-relaxed">
             Découvrez notre sélection de plats préparés avec des produits frais et locaux du terroir savoyard.
         </p>
     </div>
 </section>
 
-<section class="max-w-5xl mx-auto px-6 py-12">
+<section class="max-w-6xl mx-auto px-6 py-16">
     <div class="grid lg:grid-cols-3 gap-12">
 
         <!-- Plats par catégorie (2/3) -->
