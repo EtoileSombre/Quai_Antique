@@ -27,6 +27,15 @@ $router->get('/inscription', 'App\Controllers\Auth\AuthentificationController', 
 $router->post('/inscription', 'App\Controllers\Auth\AuthentificationController', 'register');
 $router->get('/deconnexion', 'App\Controllers\Auth\AuthentificationController', 'logout');
 
+// ESPACE CLIENT
+$router->get('/profil', 'App\Controllers\Utilisateur\ProfilController', 'index');
+$router->post('/profil', 'App\Controllers\Utilisateur\ProfilController', 'update');
+$router->post('/profil/mot-de-passe', 'App\Controllers\Utilisateur\ProfilController', 'updatePassword');
+$router->post('/profil/supprimer', 'App\Controllers\Utilisateur\ProfilController', 'deleteAccount');
+$router->get('/profil/reservations/modifier', 'App\Controllers\Utilisateur\ProfilController', 'editReservation');
+$router->post('/profil/reservations/modifier', 'App\Controllers\Utilisateur\ProfilController', 'updateReservation');
+$router->post('/profil/reservations/supprimer', 'App\Controllers\Utilisateur\ProfilController', 'deleteReservation');
+
 // ADMIN — Carte
 $router->get('/admin', 'App\Controllers\Admin\AdminCarteController', 'index');
 $router->get('/admin/carte', 'App\Controllers\Admin\AdminCarteController', 'index');

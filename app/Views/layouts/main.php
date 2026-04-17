@@ -91,9 +91,20 @@
                 <div>
                     <h3 class="font-heading text-lg font-semibold mb-4 text-or">Horaires</h3>
                     <ul class="text-gris text-sm space-y-1">
-                        <li>Lundi — Vendredi : 12h–14h / 19h–22h</li>
-                        <li>Samedi : 19h–23h</li>
-                        <li>Dimanche : Fermé</li>
+                        <?php
+                        $footerHoraires = (new \App\Repository\HoraireRepository())->findAll();
+                        foreach ($footerHoraires as $fh):
+                        ?>
+                            <li>
+                                <?= $fh->getDayName() ?> —
+                                <?php if ($fh->is_closed): ?>
+                                    Fermé
+                                <?php else: ?>
+                                    <?= substr($fh->lunch_start, 0, 5) ?>–<?= substr($fh->lunch_end, 0, 5) ?>
+                                    / <?= substr($fh->dinner_start, 0, 5) ?>–<?= substr($fh->dinner_end, 0, 5) ?>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
 

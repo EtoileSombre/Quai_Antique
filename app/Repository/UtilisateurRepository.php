@@ -61,4 +61,45 @@ class UtilisateurRepository
 
         return (int) $stmt->fetchColumn() > 0;
     }
+
+    public function emailExistsForOther(string $email, int $excludeId): bool
+    {
+        $stmt = $this->db->prepare('SELECT COUNT(*) FROM users WHERE email = :email AND id != :id');
+        $stmt->execute(['email' => $email, 'id' => $excludeId]);
+        return (int) $stmt->fetchColumn() > 0;
+    }
+
+    public function updateProfile(int $id, array $data): bool
+    {
+        $stmt = $this->db->prepare(
+            'UPDATE users SET firstname = :firstname, lastname = :lastname,
+                    email = :email, phone = :phone,
+                    default_guests = :default_guests, allergies = :allergies
+             WHERE id = :id'
+        );
+        return $stmt->execute([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'phone' => $data['phone'] ?? null,
+            'default_guests' => (int) ($data['default_guests'] ?? 1),
+            'allergies' => $data['allergies'] ?? null,
+            'id' => $id,
+        ]);
+    }
+
+    public function updatePassword(int $id, string $password): bool
+    {
+        $stmt = $this->db->prepare('UPDATE users SET password = :password WHERE id = :id');
+        return $stmt->execute([
+            'password' => password_hash($password, PASSWORD_BCRYPT),
+            'id' => $id,
+        ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db->prepare('DELETE FROM users WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
+    }
 }
