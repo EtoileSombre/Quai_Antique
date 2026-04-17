@@ -12,6 +12,9 @@ $router->get('/', 'App\Controllers\Public\AccueilController', 'index');
 // La Carte (publique)
 $router->get('/carte', 'App\Controllers\Public\CarteController', 'index');
 
+// Galerie (publique)
+$router->get('/galerie', 'App\Controllers\Public\GalerieController', 'index');
+
 // RÉSERVATION
 $router->get('/reservation', 'App\Controllers\Public\ReservationController', 'index');
 $router->post('/reservation', 'App\Controllers\Public\ReservationController', 'store');
@@ -52,5 +55,12 @@ $router->post('/admin/carte/menus/supprimer', 'App\Controllers\Admin\AdminCarteC
 $router->get('/admin/parametres', 'App\Controllers\Admin\AdminParametresController', 'index');
 $router->post('/admin/parametres/horaires', 'App\Controllers\Admin\AdminParametresController', 'updateHours');
 $router->post('/admin/parametres/capacite', 'App\Controllers\Admin\AdminParametresController', 'updateCapacity');
+
+// Admin — Galerie
+$router->get('/admin/galerie', 'App\Controllers\Admin\AdminGalerieController', 'index');
+$router->post('/admin/galerie/ajouter', 'App\Controllers\Admin\AdminGalerieController', 'create');
+$router->get('/admin/galerie/modifier', 'App\Controllers\Admin\AdminGalerieController', 'editForm');
+$router->post('/admin/galerie/modifier', 'App\Controllers\Admin\AdminGalerieController', 'update');
+$router->post('/admin/galerie/supprimer', 'App\Controllers\Admin\AdminGalerieController', 'delete');
 
 return $router;
