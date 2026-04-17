@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Application web pour le restaurant Quai Antique",
   "scripts": {
-    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/assets/css/style.css",
-    "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./public/assets/css/style.css --watch"
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./app/public/assets/css/style.css",
+    "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./app/public/assets/css/style.css --watch"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.0.0",

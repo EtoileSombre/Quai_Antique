@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../app/autoload.php';
+require_once __DIR__ . '/../autoload.php';
 
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
@@ -28,6 +28,6 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 
-$router = require_once __DIR__ . '/../app/routes.php';
+$router = require_once __DIR__ . '/../routes.php';
 
 $router->dispatch();

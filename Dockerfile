@@ -7,7 +7,10 @@ RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql
 
 # Copier la config Apache
-COPY docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY infra/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+
+# Copier la config PHP
+COPY php.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Définir le dossier de travail
 WORKDIR /var/www/html
