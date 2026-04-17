@@ -34,7 +34,7 @@ class HoraireRepository
     {
         $stmt = $this->db->query('SELECT * FROM opening_hours WHERE is_closed = 0 ORDER BY day_of_week ASC');
         $rows = $stmt->fetchAll();
-        return array_map([OpeningHour::class, 'fromArray'], $rows);
+        return array_map([Horaire::class, 'fromArray'], $rows);
     }
 
     public function updateHours(int $dayOfWeek, ?string $lunchStart, ?string $dinnerStart): bool

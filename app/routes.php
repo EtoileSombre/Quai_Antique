@@ -12,6 +12,11 @@ $router->get('/', 'App\Controllers\Public\AccueilController', 'index');
 // La Carte (publique)
 $router->get('/carte', 'App\Controllers\Public\CarteController', 'index');
 
+// RÉSERVATION
+$router->get('/reservation', 'App\Controllers\Public\ReservationController', 'index');
+$router->post('/reservation', 'App\Controllers\Public\ReservationController', 'store');
+$router->get('/api/reservation/disponibilite', 'App\Controllers\Public\ReservationController', 'disponibilite');
+
 // AUTHENTIFICATION
 $router->get('/connexion', 'App\Controllers\Auth\AuthentificationController', 'loginForm');
 $router->post('/connexion', 'App\Controllers\Auth\AuthentificationController', 'login');

@@ -57,6 +57,14 @@ class AuthentificationController extends Controller
         Session::set('user_default_guests', $user->default_guests);
         Session::set('user_allergies', $user->allergies);
 
+        // Redirection post-login (ex: après tentative de réservation)
+        $redirect = Session::get('redirect_after_login');
+        Session::delete('redirect_after_login');
+
+        if ($redirect) {
+            $this->redirect($redirect);
+        }
+
         $this->redirect($user->isAdmin() ? '/admin' : '/');
     }
 
