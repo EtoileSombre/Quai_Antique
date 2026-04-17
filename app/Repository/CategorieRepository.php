@@ -3,10 +3,10 @@
 namespace App\Repository;
 
 use App\Core\Database;
-use App\Models\Category;
+use App\Models\Categorie;
 use PDO;
 
-class CategoryRepository
+class CategorieRepository
 {
     private PDO $db;
 
@@ -19,15 +19,15 @@ class CategoryRepository
     {
         $stmt = $this->db->query('SELECT * FROM categories ORDER BY sort_order ASC, id ASC');
         $rows = $stmt->fetchAll();
-        return array_map([Category::class, 'fromArray'], $rows);
+        return array_map([Categorie::class, 'fromArray'], $rows);
     }
 
-    public function findById(int $id): ?Category
+    public function findById(int $id): ?Categorie
     {
         $stmt = $this->db->prepare('SELECT * FROM categories WHERE id = :id');
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
-        return $data ? Category::fromArray($data) : null;
+        return $data ? Categorie::fromArray($data) : null;
     }
 
     public function create(array $data): int

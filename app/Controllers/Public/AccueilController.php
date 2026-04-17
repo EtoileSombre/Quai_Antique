@@ -5,11 +5,11 @@ namespace App\Controllers\Public;
 use App\Core\Controller;
 use App\Core\Request;
 
-class HomeController extends Controller
+class AccueilController extends Controller
 {
     public function index(Request $request)
     {
-        $this->render('pages/home', [
+        $this->render('pages/accueil', [
             'title' => 'Quai Antique — Restaurant Savoyard',
         ]);
     }

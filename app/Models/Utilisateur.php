@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class User
+class Utilisateur
 {
     public int $id;
     public string $email;

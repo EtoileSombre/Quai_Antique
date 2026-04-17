@@ -3,10 +3,10 @@
 namespace App\Repository;
 
 use App\Core\Database;
-use App\Models\User;
+use App\Models\Utilisateur;
 use PDO;
 
-class UserRepository
+class UtilisateurRepository
 {
     private PDO $db;
 
@@ -15,22 +15,22 @@ class UserRepository
         $this->db = Database::getInstance();
     }
 
-    public function findByEmail(string $email): ?User
+    public function findByEmail(string $email): ?Utilisateur
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE email = :email');
         $stmt->execute(['email' => $email]);
         $data = $stmt->fetch();
 
-        return $data ? User::fromArray($data) : null;
+        return $data ? Utilisateur::fromArray($data) : null;
     }
 
-    public function findById(int $id): ?User
+    public function findById(int $id): ?Utilisateur
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE id = :id');
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
 
-        return $data ? User::fromArray($data) : null;
+        return $data ? Utilisateur::fromArray($data) : null;
     }
 
     public function create(array $data): int

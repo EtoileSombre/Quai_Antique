@@ -7,17 +7,17 @@ $router = new Router();
 // ROUTES PUBLIQUES
 
 // Page d'accueil
-$router->get('/', 'App\Controllers\Public\HomeController', 'index');
+$router->get('/', 'App\Controllers\Public\AccueilController', 'index');
 
 // La Carte (publique)
 $router->get('/carte', 'App\Controllers\Public\CarteController', 'index');
 
 // AUTHENTIFICATION
-$router->get('/connexion', 'App\Controllers\Auth\AuthController', 'loginForm');
-$router->post('/connexion', 'App\Controllers\Auth\AuthController', 'login');
-$router->get('/inscription', 'App\Controllers\Auth\AuthController', 'registerForm');
-$router->post('/inscription', 'App\Controllers\Auth\AuthController', 'register');
-$router->get('/deconnexion', 'App\Controllers\Auth\AuthController', 'logout');
+$router->get('/connexion', 'App\Controllers\Auth\AuthentificationController', 'loginForm');
+$router->post('/connexion', 'App\Controllers\Auth\AuthentificationController', 'login');
+$router->get('/inscription', 'App\Controllers\Auth\AuthentificationController', 'registerForm');
+$router->post('/inscription', 'App\Controllers\Auth\AuthentificationController', 'register');
+$router->get('/deconnexion', 'App\Controllers\Auth\AuthentificationController', 'logout');
 
 // ADMIN — Carte
 $router->get('/admin', 'App\Controllers\Admin\AdminCarteController', 'index');
@@ -42,5 +42,10 @@ $router->post('/admin/carte/menus/ajouter', 'App\Controllers\Admin\AdminCarteCon
 $router->get('/admin/carte/menus/modifier', 'App\Controllers\Admin\AdminCarteController', 'editMenuForm');
 $router->post('/admin/carte/menus/modifier', 'App\Controllers\Admin\AdminCarteController', 'updateMenu');
 $router->post('/admin/carte/menus/supprimer', 'App\Controllers\Admin\AdminCarteController', 'deleteMenu');
+
+// Admin — Paramètres (horaires + capacité)
+$router->get('/admin/parametres', 'App\Controllers\Admin\AdminParametresController', 'index');
+$router->post('/admin/parametres/horaires', 'App\Controllers\Admin\AdminParametresController', 'updateHours');
+$router->post('/admin/parametres/capacite', 'App\Controllers\Admin\AdminParametresController', 'updateCapacity');
 
 return $router;

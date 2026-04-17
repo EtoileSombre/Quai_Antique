@@ -6,22 +6,22 @@ use App\Core\Controller;
 use App\Core\Csrf;
 use App\Core\Request;
 use App\Core\Session;
-use App\Repository\CategoryRepository;
-use App\Repository\DishRepository;
+use App\Repository\CategorieRepository;
+use App\Repository\PlatRepository;
 use App\Repository\MenuRepository;
 
 class AdminCarteController extends Controller
 {
-    private CategoryRepository $categoryRepo;
-    private DishRepository $dishRepo;
+    private CategorieRepository $categoryRepo;
+    private PlatRepository $platRepo;
     private MenuRepository $menuRepo;
 
     public function __construct()
     {
         parent::__construct();
         $this->checkAdmin();
-        $this->categoryRepo = new CategoryRepository();
-        $this->dishRepo = new DishRepository();
+        $this->categoryRepo = new CategorieRepository();
+        $this->platRepo = new PlatRepository();
         $this->menuRepo = new MenuRepository();
     }
 
@@ -38,7 +38,7 @@ class AdminCarteController extends Controller
     public function index(Request $request)
     {
         $categories = $this->categoryRepo->findAll();
-        $dishes = $this->dishRepo->findAll();
+        $dishes = $this->platRepo->findAll();
         $menus = $this->menuRepo->findAll();
 
         $this->render('pages/admin/carte', [
@@ -85,7 +85,7 @@ class AdminCarteController extends Controller
             $this->redirect('/admin/carte');
         }
 
-        $this->render('pages/admin/category-edit', [
+        $this->render('pages/admin/categorie-modifier', [
             'title' => 'Modifier catégorie — Admin',
             'category' => $category,
         ]);
@@ -135,7 +135,7 @@ class AdminCarteController extends Controller
     public function createDishForm(Request $request)
     {
         $categories = $this->categoryRepo->findAll();
-        $this->render('pages/admin/dish-form', [
+        $this->render('pages/admin/plat-formulaire', [
             'title' => 'Ajouter un plat — Admin',
             'categories' => $categories,
             'dish' => null,
@@ -155,7 +155,7 @@ class AdminCarteController extends Controller
             $this->redirect('/admin/carte/plats/ajouter');
         }
 
-        $this->dishRepo->create($data);
+        $this->platRepo->create($data);
         Session::set('success', 'Plat ajouté.');
         $this->redirect('/admin/carte');
     }
@@ -163,7 +163,7 @@ class AdminCarteController extends Controller
     public function editDishForm(Request $request)
     {
         $id = (int) $request->get('id');
-        $dish = $this->dishRepo->findById($id);
+        $dish = $this->platRepo->findById($id);
 
         if (!$dish) {
             Session::set('error', 'Plat introuvable.');
@@ -172,7 +172,7 @@ class AdminCarteController extends Controller
 
         $categories = $this->categoryRepo->findAll();
 
-        $this->render('pages/admin/dish-form', [
+        $this->render('pages/admin/plat-formulaire', [
             'title' => 'Modifier un plat — Admin',
             'categories' => $categories,
             'dish' => $dish,
@@ -193,7 +193,7 @@ class AdminCarteController extends Controller
             $this->redirect('/admin/carte/plats/modifier?id=' . $id);
         }
 
-        $this->dishRepo->update($id, $data);
+        $this->platRepo->update($id, $data);
         Session::set('success', 'Plat mis à jour.');
         $this->redirect('/admin/carte');
     }
@@ -206,7 +206,7 @@ class AdminCarteController extends Controller
         }
 
         $id = (int) $request->post('id');
-        $this->dishRepo->delete($id);
+        $this->platRepo->delete($id);
 
         Session::set('success', 'Plat supprimé.');
         $this->redirect('/admin/carte');
@@ -236,7 +236,7 @@ class AdminCarteController extends Controller
 
     public function createMenuForm(Request $request)
     {
-        $this->render('pages/admin/menu-form', [
+        $this->render('pages/admin/menu-formulaire', [
             'title' => 'Ajouter un menu — Admin',
             'menu' => null,
         ]);
@@ -270,7 +270,7 @@ class AdminCarteController extends Controller
             $this->redirect('/admin/carte');
         }
 
-        $this->render('pages/admin/menu-form', [
+        $this->render('pages/admin/menu-formulaire', [
             'title' => 'Modifier un menu — Admin',
             'menu' => $menu,
         ]);

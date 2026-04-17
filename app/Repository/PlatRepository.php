@@ -3,10 +3,10 @@
 namespace App\Repository;
 
 use App\Core\Database;
-use App\Models\Dish;
+use App\Models\Plat;
 use PDO;
 
-class DishRepository
+class PlatRepository
 {
     private PDO $db;
 
@@ -24,7 +24,7 @@ class DishRepository
              ORDER BY c.sort_order ASC, d.title ASC'
         );
         $rows = $stmt->fetchAll();
-        return array_map([Dish::class, 'fromArray'], $rows);
+        return array_map([Plat::class, 'fromArray'], $rows);
     }
 
     public function findGroupedByCategory(): array
@@ -43,12 +43,12 @@ class DishRepository
             if (!isset($grouped[$catName])) {
                 $grouped[$catName] = [];
             }
-            $grouped[$catName][] = Dish::fromArray($row);
+            $grouped[$catName][] = Plat::fromArray($row);
         }
         return $grouped;
     }
 
-    public function findById(int $id): ?Dish
+    public function findById(int $id): ?Plat
     {
         $stmt = $this->db->prepare(
             'SELECT d.*, c.name AS category_name
@@ -58,7 +58,7 @@ class DishRepository
         );
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch();
-        return $data ? Dish::fromArray($data) : null;
+        return $data ? Plat::fromArray($data) : null;
     }
 
     public function create(array $data): int

@@ -6,16 +6,16 @@ use App\Core\Controller;
 use App\Core\Csrf;
 use App\Core\Request;
 use App\Core\Session;
-use App\Repository\UserRepository;
+use App\Repository\UtilisateurRepository;
 
-class AuthController extends Controller
+class AuthentificationController extends Controller
 {
-    private UserRepository $userRepo;
+    private UtilisateurRepository $userRepo;
 
     public function __construct()
     {
         parent::__construct();
-        $this->userRepo = new UserRepository();
+        $this->userRepo = new UtilisateurRepository();
     }
 
     public function loginForm(Request $request)
@@ -24,7 +24,7 @@ class AuthController extends Controller
             $this->redirect('/');
         }
 
-        $this->render('pages/auth/login', [
+        $this->render('pages/auth/connexion', [
             'title' => 'Connexion — Quai Antique',
         ]);
     }
@@ -66,7 +66,7 @@ class AuthController extends Controller
             $this->redirect('/');
         }
 
-        $this->render('pages/auth/register', [
+        $this->render('pages/auth/inscription', [
             'title' => 'Inscription — Quai Antique',
         ]);
     }
