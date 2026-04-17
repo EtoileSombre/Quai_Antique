@@ -77,15 +77,15 @@ CREATE TABLE IF NOT EXISTS reservations (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Données initiales : horaires par défaut
+-- Données initiales : horaires par défaut (CDC: mardi-dimanche, lundi fermé)
 INSERT INTO opening_hours (day_of_week, lunch_start, lunch_end, dinner_start, dinner_end, is_closed) VALUES
-(1, '12:00', '14:00', '19:00', '22:00', 0),
-(2, '12:00', '14:00', '19:00', '22:00', 0),
-(3, '12:00', '14:00', '19:00', '22:00', 0),
-(4, '12:00', '14:00', '19:00', '22:00', 0),
-(5, '12:00', '14:00', '19:00', '22:00', 0),
-(6, '12:00', '14:00', '19:00', '22:30', 0),
-(7, NULL, NULL, NULL, NULL, 1);
+(1, NULL, NULL, NULL, NULL, 1),
+(2, '12:00', '14:00', '19:00', '21:00', 0),
+(3, '12:00', '14:00', '19:00', '21:00', 0),
+(4, '12:00', '14:00', '19:00', '21:00', 0),
+(5, '12:00', '14:00', '19:00', '21:00', 0),
+(6, '12:00', '14:00', '19:00', '21:00', 0),
+(7, '12:00', '14:00', '19:00', '21:00', 0);
 
 -- Capacité par défaut
 INSERT INTO restaurant_settings (max_capacity) VALUES (50);
