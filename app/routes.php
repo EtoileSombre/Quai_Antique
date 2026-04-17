@@ -63,4 +63,10 @@ $router->get('/admin/galerie/modifier', 'App\Controllers\Admin\AdminGalerieContr
 $router->post('/admin/galerie/modifier', 'App\Controllers\Admin\AdminGalerieController', 'update');
 $router->post('/admin/galerie/supprimer', 'App\Controllers\Admin\AdminGalerieController', 'delete');
 
+// Admin — Réservations
+$router->get('/admin/reservations', 'App\Controllers\Admin\AdminReservationsController', 'index');
+$router->get('/admin/reservations/modifier', 'App\Controllers\Admin\AdminReservationsController', 'editForm');
+$router->post('/admin/reservations/modifier', 'App\Controllers\Admin\AdminReservationsController', 'update');
+$router->post('/admin/reservations/supprimer', 'App\Controllers\Admin\AdminReservationsController', 'delete');
+
 return $router;
