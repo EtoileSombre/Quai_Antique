@@ -29,6 +29,7 @@
                 <li role="none"><a href="/" class="nav-link" role="menuitem">Accueil</a></li>
                 <li role="none"><a href="/carte" class="nav-link" role="menuitem">La Carte</a></li>
                 <li role="none"><a href="/galerie" class="nav-link" role="menuitem">Galerie</a></li>
+                <li role="none"><a href="/avis" class="nav-link" role="menuitem">Avis</a></li>
                 <li role="none"><a href="/reservation" class="nav-link" role="menuitem"><i class="bi bi-calendar-event me-1"></i> Réservation</a></li>
                 <?php if (\App\Core\Session::has('user_id')): ?>
                     <?php if (\App\Core\Session::get('user_role') === 'admin'): ?>
@@ -54,6 +55,7 @@
                 <li><a href="/" class="nav-link text-base">Accueil</a></li>
                 <li><a href="/carte" class="nav-link text-base">La Carte</a></li>
                 <li><a href="/galerie" class="nav-link text-base">Galerie</a></li>
+                <li><a href="/avis" class="nav-link text-base">Avis</a></li>
                 <li><a href="/reservation" class="nav-link text-base"><i class="bi bi-calendar-event"></i> Réservation</a></li>
                 <?php if (\App\Core\Session::has('user_id')): ?>
                     <?php if (\App\Core\Session::get('user_role') === 'admin'): ?>
@@ -131,5 +133,8 @@
     </footer>
 
     <script src="/assets/js/app.js"></script>
+    <?php if (isset($pageJs)): ?>
+        <script src="/assets/js/<?= $pageJs ?>"></script>
+    <?php endif; ?>
 </body>
 </html>

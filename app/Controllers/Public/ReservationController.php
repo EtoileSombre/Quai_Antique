@@ -40,6 +40,7 @@ class ReservationController extends Controller
             'horaires' => $horaires,
             'defaultGuests' => $defaultGuests,
             'defaultAllergies' => $defaultAllergies,
+            'pageJs' => 'reservation.js',
         ]);
     }
 
