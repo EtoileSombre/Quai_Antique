@@ -1,12 +1,16 @@
 <!-- Hero Section -->
-<section class="bg-nacre">
-    <div class="max-w-3xl mx-auto px-6 pt-20 pb-12 md:pt-28 md:pb-16 text-center">
+<section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+        <img src="/assets/images/montagne.jpg" alt="Paysage savoyard" class="w-full h-full object-cover">
+        <div class="absolute inset-0" style="background-color: rgba(0,0,0,0.55);"></div>
+    </div>
+    <div class="relative max-w-3xl mx-auto px-6 pt-20 pb-12 md:pt-28 md:pb-16 text-center">
         <p class="font-ui text-or text-xs md:text-sm tracking-[0.3em] uppercase mb-6">Restaurant gastronomique — Chambéry</p>
-        <h1 class="font-heading text-3xl md:text-5xl font-semibold mb-4 leading-tight text-or-dark">
+        <h1 class="font-heading text-3xl md:text-5xl font-semibold mb-4 leading-tight text-white">
             L'Essence de la <span class="text-or">Savoie</span>
         </h1>
         <div class="separator"></div>
-        <p class="text-base md:text-lg text-gris max-w-xl mx-auto mb-10 leading-relaxed">
+        <p class="text-base md:text-lg text-white max-w-xl mx-auto mb-10 leading-relaxed" style="opacity: 0.85;">
             Le Chef Arnaud Michant vous invite à découvrir une cuisine raffinée, 
             sublimant les produits et producteurs du terroir savoyard.
         </p>
@@ -98,8 +102,8 @@
                 </p>
                 <a href="/carte" class="btn-primary">Voir la carte</a>
             </div>
-            <div class="aspect-[4/5] bg-or/10 rounded-lg flex items-center justify-center border border-or/20">
-                <span class="text-or text-sm font-ui uppercase tracking-widest">Photo du Chef</span>
+            <div class="aspect-[4/5] rounded-lg overflow-hidden">
+                <img src="/assets/images/chef.jpg" alt="Chef Arnaud Michant" class="w-full h-full object-cover">
             </div>
         </div>
     </div>
