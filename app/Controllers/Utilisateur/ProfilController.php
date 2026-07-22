@@ -247,7 +247,7 @@ class ProfilController extends Controller
             return;
         }
 
-        $this->reservationRepo->delete($id);
+        $this->reservationRepo->cancel($id);
         Session::set('flash_success', 'Réservation annulée.');
         $this->redirect('/profil');
     }

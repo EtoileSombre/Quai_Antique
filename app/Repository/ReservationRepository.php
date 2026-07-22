@@ -107,6 +107,14 @@ class ReservationRepository
         ]);
     }
 
+    public function cancel(int $id): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE reservations SET status = 'cancelled' WHERE id = :id"
+        );
+        return $stmt->execute(['id' => $id]);
+    }
+
     public function delete(int $id): bool
     {
         $stmt = $this->db->prepare('DELETE FROM reservations WHERE id = :id');

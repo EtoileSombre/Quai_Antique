@@ -109,8 +109,8 @@ class AdminReservationsController extends Controller
         $reservation = $this->reservationRepo->findById($id);
 
         if ($reservation) {
-            $this->reservationRepo->delete($id);
-            Session::set('flash_success', 'Réservation supprimée.');
+            $this->reservationRepo->cancel($id);
+            Session::set('flash_success', 'Réservation annulée.');
             $this->redirect('/admin/reservations?date=' . $reservation->reservation_date);
             return;
         }
